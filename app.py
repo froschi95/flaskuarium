@@ -58,7 +58,7 @@ def admin():
 		return render_template("admin.html")
 	else:
 		flash("Sorry you must be the Admin to access the Admin Page...")
-		return redirect(url_for('dashboard'))
+		return redirect(url_for('profile'))
 
 
 
@@ -89,7 +89,7 @@ def login():
 			if check_password_hash(user.password_hash, form.password.data):
 				login_user(user)
 				flash("Login Succesfull!!")
-				return redirect(url_for('dashboard'))
+				return redirect(url_for('profile'))
 			else:
 				flash("Wrong Password - Try Again!")
 		else:
@@ -106,19 +106,18 @@ def logout():
 	flash("You Have Been Logged Out!  Thanks For Stopping By...")
 	return redirect(url_for('login'))
 
-# Create Dashboard Page
-@app.route('/dashboard', methods=['GET', 'POST'])
+# Create Profile Dashboard Page
+@app.route('/profile', methods=['GET', 'POST'])
 @login_required
-def dashboard():
+def profile():
 	form = UserForm()
 	id = current_user.id
 	name_to_update = Users.query.get_or_404(id)
 	if request.method == "POST":
 		name_to_update.name = request.form['name']
 		name_to_update.email = request.form['email']
-		name_to_update.favorite_color = request.form['favorite_color']
 		name_to_update.username = request.form['username']
-		name_to_update.about_author = request.form['about_author']
+		name_to_update.bio = request.form['bio']
 		
 
 		# Check for profile pic
@@ -139,27 +138,27 @@ def dashboard():
 				db.session.commit()
 				saver.save(os.path.join(app.config['UPLOAD_FOLDER'], pic_name))
 				flash("User Updated Successfully!")
-				return render_template("dashboard.html", 
+				return render_template("profile.html", 
 					form=form,
 					name_to_update = name_to_update)
 			except:
 				flash("Error!  Looks like there was a problem...try again!")
-				return render_template("dashboard.html", 
+				return render_template("profile.html", 
 					form=form,
 					name_to_update = name_to_update)
 		else:
 			db.session.commit()
 			flash("User Updated Successfully!")
-			return render_template("dashboard.html", 
+			return render_template("profile.html", 
 				form=form, 
 				name_to_update = name_to_update)
 	else:
-		return render_template("dashboard.html", 
+		return render_template("profile.html", 
 				form=form,
 				name_to_update = name_to_update,
 				id = id)
 
-	return render_template('dashboard.html')
+	return render_template('profile.html')
 
 
 
@@ -291,7 +290,7 @@ def delete(id):
 			form=form, name=name,our_users=our_users)
 	else:
 		flash("Sorry, you can't delete that user! ")
-		return redirect(url_for('dashboard'))
+		return redirect(url_for('profile'))
 
 
 # Update Database Record
@@ -303,7 +302,6 @@ def update(id):
 	if request.method == "POST":
 		name_to_update.name = request.form['name']
 		name_to_update.email = request.form['email']
-		name_to_update.favorite_color = request.form['favorite_color']
 		name_to_update.username = request.form['username']
 		try:
 			db.session.commit()
@@ -333,14 +331,13 @@ def add_user():
 		if user is None:
 			# Hash the password!!!
 			hashed_pw = generate_password_hash(form.password_hash.data, "sha256")
-			user = Users(username=form.username.data, name=form.name.data, email=form.email.data, favorite_color=form.favorite_color.data, password_hash=hashed_pw)
+			user = Users(username=form.username.data, name=form.name.data, email=form.email.data, password_hash=hashed_pw)
 			db.session.add(user)
 			db.session.commit()
 		name = form.name.data
 		form.name.data = ''
 		form.username.data = ''
 		form.email.data = ''
-		form.favorite_color.data = ''
 		form.password_hash.data = ''
 
 		flash("User Added Successfully!")
