@@ -21,7 +21,6 @@ class LoginForm(FlaskForm):
 # Create a Posts Form
 class PostForm(FlaskForm):
 	title = StringField("Title", validators=[DataRequired()])
-	#content = StringField("Content", validators=[DataRequired()], widget=TextArea())
 	content = CKEditorField('Content', validators=[DataRequired()])
 	
 	#author = StringField("Author")
@@ -34,7 +33,7 @@ class UserForm(FlaskForm):
 	username = StringField("Username", validators=[DataRequired()])
 	email = StringField("Email", validators=[DataRequired()])
 	# favorite_color = StringField("Favorite Color")
-	about_author = TextAreaField("About Author")
+	bio = TextAreaField("About Author")
 	password_hash = PasswordField('Password', validators=[DataRequired(), EqualTo('password_hash2', message='Passwords Must Match!')])
 	password_hash2 = PasswordField('Confirm Password', validators=[DataRequired()])
 	profile_pic = FileField("Profile Pic")

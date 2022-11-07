@@ -1,9 +1,11 @@
 from flask_sqlalchemy import SQLAlchemy
-from app import db
+# from app import db
 from flask_login import UserMixin
 from datetime import datetime
 from werkzeug.security import generate_password_hash, check_password_hash 
 
+
+db = SQLAlchemy()
 # Create a Blog Post model
 class Posts(db.Model):
     __tablename__ = 'posts'

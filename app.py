@@ -10,7 +10,7 @@ from flask_ckeditor import CKEditor
 from werkzeug.utils import secure_filename
 import uuid as uuid
 import os
-from models import Users, Posts
+from models import db, Users, Posts
 
 
 # Create a Flask Instance
@@ -18,12 +18,7 @@ app = Flask(__name__)
 # Add CKEditor
 ckeditor = CKEditor(app)
 # Add Database
-# Old SQLite DB
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///users.db'
-# New MySQL DB
-# app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql://username:password@localhost/db_name'
-#app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+pymysql://root:password123@localhost/our_users'
-# Secret Key!
 app.config['SECRET_KEY'] = "my super secret key that no one is supposed to know"
 
 
@@ -31,7 +26,7 @@ UPLOAD_FOLDER = 'static/images/'
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 
 # Initialize The Database
-db = SQLAlchemy(app)
+db.init_app(app)
 migrate = Migrate(app, db)
 
 # Flask_Login Stuff
@@ -199,8 +194,8 @@ def delete_post(id):
 		posts = Posts.query.order_by(Posts.date_posted)
 		return render_template("index.html", posts=posts)
 
-@app.route('/posts')
-def posts():
+@app.route('/')
+def index():
 	# Grab all the posts from the database
 	posts = Posts.query.order_by(Posts.date_posted)
 	return render_template("index.html", posts=posts)
