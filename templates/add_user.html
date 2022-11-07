@@ -14,7 +14,7 @@ get_flashed_messages() %}
 {% endfor %} {% if name %}
 <h1>User Added!</h1>
 <br /><br />
-<table class="table table-hover table-bordered table-striped">
+<!-- <table class="table table-hover table-bordered table-striped">
 	{% for our_user in our_users %}
 	<tr>
 		<td>
@@ -23,12 +23,14 @@ get_flashed_messages() %}
 			{{ our_user.email }} - {{ our_user.favorite_color }} -
 			<a href="{{ url_for('delete', id=our_user.id)}}">Delete</a>
 		</td>
-	</tr>
+	</tr> -->
+
+	<a href="{{ url_for('login') }}">Login Here</a>
 	{% endfor %}
 </table>
 
 {% else %}
-<h1>User List:</h1>
+<h1>Sign Up:</h1>
 <br />
 <div class="shadow p-3 mb-5 bg-body rounded">
 	<form method="POST">
@@ -44,10 +46,6 @@ get_flashed_messages() %}
 		form.email(class="form-control") }}
 		<br />
 
-		{{ form.favorite_color.label(class="form-label") }} {{
-		form.favorite_color(class="form-control") }}
-		<br />
-
 		{{ form.password_hash.label(class="form-label") }} {{
 		form.password_hash(class="form-control") }}
 		<br />
@@ -58,19 +56,7 @@ get_flashed_messages() %}
 
 		{{ form.submit(class="btn btn-secondary") }}
 	</form>
+	<p>Already Signed Up, Click here to <a href="{{ url_for('login') }}">login</a></p>
 </div>
-<br /><br /><br />
-<table class="table table-hover table-bordered table-striped">
-	{% for our_user in our_users %}
-	<tr>
-		<td>
-			{{ our_user.id }}.
-			<a href="{{ url_for('update', id=our_user.id)}}">{{ our_user.name }}</a> -
-			{{our_user.username }} - {{ our_user.email }} - {{ our_user.favorite_color
-			}} - PW: {{ our_user.password_hash }} -
-			<a href="{{ url_for('delete', id=our_user.id)}}">Delete</a>
-		</td>
-	</tr>
-	{% endfor %}
-</table>
+<br />
 {% endif %} {% endblock %}
