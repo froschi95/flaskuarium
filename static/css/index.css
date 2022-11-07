@@ -12,6 +12,9 @@ body {
 	padding: 0;
 	box-sizing: border-box;
 }
+.navbar {
+	background: rgb(67, 111, 153) !important;
+}
 
 .logo {
 	font-family: "Kolker Brush", cursive;
