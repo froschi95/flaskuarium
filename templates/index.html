@@ -21,7 +21,7 @@ get_flashed_messages() %}
 	>
 	<br /><br />
 
-	{{ post.content|safe }}
+	{{ post.content|truncate(500)|safe }}
 	<br /><br />
 	<a
 		href="{{ url_for('post', id=post.id)}}"
@@ -29,7 +29,7 @@ get_flashed_messages() %}
 		>View Post</a
 	>
 
-	{% if post.author_id == current_user.id or current_user.id == 14 %}
+	{% if post.author_id == current_user.id %}
 	<a
 		href="{{ url_for('edit_post', id=post.id)}}"
 		class="btn btn-outline-secondary btn-sm"
