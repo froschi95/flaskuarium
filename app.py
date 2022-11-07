@@ -1,5 +1,5 @@
 from flask import Flask, render_template, flash, request, redirect, url_for
-from datetime import datetime 
+# from datetime import datetime 
 from flask_sqlalchemy import SQLAlchemy
 from flask_migrate import Migrate
 from werkzeug.security import generate_password_hash, check_password_hash 
@@ -78,6 +78,7 @@ def search():
 		 form=form,
 		 searched = post.searched,
 		 posts = posts)
+
 # Create Login Page
 @app.route('/login', methods=['GET', 'POST'])
 def login():
