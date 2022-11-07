@@ -44,7 +44,7 @@
 	{{ current_user.favorite_color }}<br/>
 
 	<strong>About Author:</strong>
-	{{ current_user.about_author }}<br/>
+	{{ current_user.bio }}<br/>
 
 	<strong>Profile Pic:</strong>
 	{{ current_user.profile_pic }}<br/>
@@ -88,7 +88,7 @@
   </div>
   <div class="card-body">
 
-  	<form action="/dashboard" method="POST" enctype="multipart/form-data">
+  	<form action="/profile" method="POST" enctype="multipart/form-data">
 		{{ form.hidden_tag() }}
 
 		{{ form.name.label(class="form-label") }}
@@ -106,14 +106,10 @@
 		{{ form.email(class="form-control", value=name_to_update.email) }}
 		<br/>
 		
-		{{ form.favorite_color.label(class="form-label") }}
 
-		{{ form.favorite_color(class="form-control", value=name_to_update.favorite_color) }}
-		<br/>
+		{{ form.bio.label(class="form-label") }}
 
-		{{ form.about_author.label(class="form-label") }}
-
-		<textarea name="about_author" class="form-control">{{ name_to_update.about_author }}</textarea>
+		<textarea name="bio" class="form-control">{{ name_to_update.bio }}</textarea>
 		<br/>
 
 		{{ form.profile_pic.label(class="form-label") }}
