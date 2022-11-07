@@ -181,7 +181,7 @@ def delete_post(id):
 
 			# Grab all the posts from the database
 			posts = Posts.query.order_by(Posts.date_posted)
-			return render_template("posts.html", posts=posts)
+			return render_template("index.html", posts=posts)
 
 
 		except:
@@ -190,20 +190,20 @@ def delete_post(id):
 
 			# Grab all the posts from the database
 			posts = Posts.query.order_by(Posts.date_posted)
-			return render_template("posts.html", posts=posts)
+			return render_template("index.html", posts=posts)
 	else:
 		# Return a message
 		flash("You Aren't Authorized To Delete That Post!")
 
 		# Grab all the posts from the database
 		posts = Posts.query.order_by(Posts.date_posted)
-		return render_template("posts.html", posts=posts)
+		return render_template("index.html", posts=posts)
 
 @app.route('/posts')
 def posts():
 	# Grab all the posts from the database
 	posts = Posts.query.order_by(Posts.date_posted)
-	return render_template("posts.html", posts=posts)
+	return render_template("index.html", posts=posts)
 
 @app.route('/posts/<int:id>')
 def post(id):
@@ -235,7 +235,7 @@ def edit_post(id):
 	else:
 		flash("You Aren't Authorized To Edit This Post...")
 		posts = Posts.query.order_by(Posts.date_posted)
-		return render_template("posts.html", posts=posts)
+		return render_template("index.html", posts=posts)
 
 
 
