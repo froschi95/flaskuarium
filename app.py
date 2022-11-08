@@ -59,6 +59,9 @@ def admin():
 # Create Search Function
 @app.route('/search', methods=["POST"])
 def search():
+	"""
+	Searches through the database and returns a matching result.
+	"""
 	form = SearchForm()
 	posts = Posts.query
 	if form.validate_on_submit():
@@ -77,6 +80,9 @@ def search():
 # Create Login Page
 @app.route('/login', methods=['GET', 'POST'])
 def login():
+	"""
+	Handles login authentication and authorization
+	"""
 	form = LoginForm()
 	if form.validate_on_submit():
 		user = Users.query.filter_by(username=form.username.data).first()
@@ -98,6 +104,9 @@ def login():
 @app.route('/logout', methods=['GET', 'POST'])
 @login_required
 def logout():
+	"""
+	Handle user logout
+	"""
 	logout_user()
 	flash("You Have Been Logged Out!  Thanks For Stopping By...")
 	return redirect(url_for('login'))
@@ -107,6 +116,9 @@ def logout():
 @app.route('/profile', methods=['GET', 'POST'])
 @login_required
 def profile():
+	"""
+	User profile/dashbord view
+	"""
 	form = UserForm()
 	id = current_user.id
 	name_to_update = Users.query.get_or_404(id)
@@ -193,18 +205,28 @@ def delete_post(id):
 
 @app.route('/')
 def index():
-	# Grab all the posts from the database
+	"""
+	Grab all the posts from the database and displays them on the homepage
+	"""
 	posts = Posts.query.order_by(Posts.date_posted)
 	return render_template("index.html", posts=posts)
 
 @app.route('/posts/<int:id>')
 def post(id):
+	"""
+	Gets a single post with from the database
+	:param: id
+	:return:
+	"""
 	post = Posts.query.get_or_404(id)
 	return render_template('post.html', post=post)
 
 @app.route('/posts/edit/<int:id>', methods=['GET', 'POST'])
 @login_required
 def edit_post(id):
+	"""
+	Handles post editing/ updating
+	"""
 	post = Posts.query.get_or_404(id)
 	form = PostForm()
 	if form.validate_on_submit():
@@ -235,6 +257,9 @@ def edit_post(id):
 @app.route('/add-post', methods=['GET', 'POST'])
 #@login_required
 def add_post():
+	"""
+	Handles new post creation
+	"""
 	form = PostForm()
 
 	if form.validate_on_submit():
@@ -260,6 +285,9 @@ def add_post():
 @app.route('/delete/<int:id>')
 @login_required
 def delete(id):
+	"""
+	deletes user from db
+	"""
 	# Check logged in id vs. id to delete
 	if id == current_user.id:
 		user_to_delete = Users.query.get_or_404(id)
@@ -290,6 +318,9 @@ def delete(id):
 @app.route('/update/<int:id>', methods=['GET', 'POST'])
 @login_required
 def update(id):
+	"""
+	Update user information
+	"""
 	form = UserForm()
 	name_to_update = Users.query.get_or_404(id)
 	if request.method == "POST":
@@ -317,6 +348,9 @@ def update(id):
 
 @app.route('/user/add', methods=['GET', 'POST'])
 def add_user():
+	"""
+	Handles new user registration
+	"""
 	name = None
 	form = UserForm()
 	if form.validate_on_submit():
