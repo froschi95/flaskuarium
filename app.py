@@ -56,7 +56,6 @@ def admin():
 		return redirect(url_for('profile'))
 
 
-
 # Create Search Function
 @app.route('/search', methods=["POST"])
 def search():
@@ -73,6 +72,7 @@ def search():
 		 form=form,
 		 searched = post.searched,
 		 posts = posts)
+
 
 # Create Login Page
 @app.route('/login', methods=['GET', 'POST'])
@@ -91,8 +91,8 @@ def login():
 		else:
 			flash("That User Doesn't Exist! Try Again...")
 
-
 	return render_template('login.html', form=form)
+
 
 # Create Logout Page
 @app.route('/logout', methods=['GET', 'POST'])
@@ -101,6 +101,7 @@ def logout():
 	logout_user()
 	flash("You Have Been Logged Out!  Thanks For Stopping By...")
 	return redirect(url_for('login'))
+
 
 # Create Profile Dashboard Page
 @app.route('/profile', methods=['GET', 'POST'])
@@ -155,10 +156,6 @@ def profile():
 				id = id)
 
 	return render_template('profile.html')
-
-
-
-
 
 
 @app.route('/posts/delete/<int:id>')
@@ -312,7 +309,7 @@ def update(id):
 				name_to_update = name_to_update,
 				id=id)
 	else:
-		return render_template("update.html", 
+		return render_template("update_user.html", 
 				form=form,
 				name_to_update = name_to_update,
 				id = id)
